@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1440">
+<title>PrimeTable | Reserva tu mesa</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primario: #8C1C2E;
+    --secundario: #8A5A00;
+    --fondo: #FAF6F0;
+    --texto: #2B2B2B;
+    --blanco: #FFFFFF;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--fondo);
+    color: var(--texto);
+    font-family: 'Inter', Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  h1, h2, h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  a { color: inherit; text-decoration: none; }
+  a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible {
+    outline: 3px solid var(--secundario);
+    outline-offset: 2px;
+  }
+
+  .page {
+    display: flex;
+    flex-direction: column;
+    width: 1440px;
+    margin: 0 auto;
+    background: var(--fondo);
+  }
+
+  /* Cajas de imagen */
+  .imagen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--blanco);
+    font-weight: 600;
+    font-size: 18px;
+    border-radius: 12px;
+  }
+
+  /* NAVBAR */
+  .navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 80px;
+    border-bottom: 1px solid var(--secundario);
+  }
+  .navbar__logo {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--primario);
+  }
+  .navbar__menu {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    list-style: none;
+  }
+  .navbar__menu a {
+    font-weight: 500;
+    padding: 8px 4px;
+  }
+  .navbar__menu a.activo {
+    color: var(--primario);
+    border-bottom: 2px solid var(--primario);
+  }
+  .navbar__cta {
+    display: flex;
+    padding: 12px 24px;
+    background: var(--primario);
+    color: var(--blanco);
+    font-weight: 600;
+    border-radius: 8px;
+  }
+
+  /* HERO */
+  .hero {
+    display: flex;
+    align-items: center;
+    gap: 64px;
+    padding: 72px 80px;
+  }
+  .hero__contenido {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    flex: 1;
+  }
+  .hero__titulo { font-size: 56px; color: var(--primario); }
+  .hero__texto { font-size: 18px; max-width: 520px; }
+  .hero__imagen {
+    flex: 1;
+    height: 440px;
+    background: var(--primario);
+  }
+
+  /* FORM */
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 32px;
+    background: var(--blanco);
+    border: 1px solid var(--secundario);
+    border-radius: 16px;
+    max-width: 560px;
+  }
+  .form__titulo { font-size: 24px; }
+  .form__campos {
+    display: flex;
+    gap: 16px;
+  }
+  .form__grupo {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+  }
+  .form__grupo label { font-weight: 600; font-size: 14px; }
+  .form__grupo input,
+  .form__grupo select {
+    padding: 12px 14px;
+    font-family: inherit;
+    font-size: 16px;
+    color: var(--texto);
+    background: var(--fondo);
+    border: 1px solid var(--texto);
+    border-radius: 8px;
+  }
+  .form__boton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 24px;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--blanco);
+    background: var(--primario);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  .form__boton:hover { background: #721524; }
+  .form__ayuda { font-size: 14px; }
+
+  /* CARDS */
+  .beneficios {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    padding: 40px 80px 80px;
+  }
+  .beneficios__titulo { font-size: 36px; }
+  .beneficios__lista {
+    display: flex;
+    gap: 32px;
+  }
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    flex: 1;
+    padding: 24px;
+    background: var(--blanco);
+    border: 1px solid var(--secundario);
+    border-radius: 16px;
+  }
+  .card__imagen { height: 180px; }
+  .card__imagen--primario { background: var(--primario); }
+  .card__imagen--secundario { background: var(--secundario); }
+  .card__titulo { font-size: 22px; color: var(--primario); }
+
+  /* FOOTER */
+  .footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 32px 80px;
+    background: var(--primario);
+    color: var(--blanco);
+  }
+  .footer__marca {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .footer__logo {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 24px;
+    font-weight: 700;
+  }
+  .footer__enlaces {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+  .footer__enlaces a { text-decoration: underline; }
+</style>
+</head>
+<body>
+  <div class="page">
+
+    <header class="navbar">
+      <a class="navbar__logo" href="#">PrimeTable</a>
+      <nav>
+        <ul class="navbar__menu">
+          <li><a class="activo" href="#">Inicio</a></li>
+          <li><a href="#">Mis reservas</a></li>
+          <li><a href="#">Ayuda</a></li>
+        </ul>
+      </nav>
+      <a class="navbar__cta" href="#">Nueva reserva</a>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero__contenido">
+          <h1 class="hero__titulo">Reserva tu mesa en menos de un minuto</h1>
+          <p class="hero__texto">Elige la fecha, la hora y cuántas personas van. Te mostramos al instante los horarios que tienen mesa libre.</p>
+
+          <form class="form" action="#" method="get">
+            <h2 class="form__titulo">Consulta disponibilidad</h2>
+            <div class="form__campos">
+              <div class="form__grupo">
+                <label for="fecha">Fecha</label>
+                <input type="date" id="fecha" name="fecha" required>
+              </div>
+              <div class="form__grupo">
+                <label for="hora">Hora</label>
+                <select id="hora" name="hora" required>
+                  <option value="">Selecciona</option>
+                  <option>12:00 p. m.</option>
+                  <option>1:00 p. m.</option>
+                  <option>2:00 p. m.</option>
+                  <option>7:00 p. m.</option>
+                  <option>8:00 p. m.</option>
+                  <option>9:00 p. m.</option>
+                </select>
+              </div>
+              <div class="form__grupo">
+                <label for="personas">Comensales</label>
+                <select id="personas" name="personas" required>
+                  <option>1 persona</option>
+                  <option selected>2 personas</option>
+                  <option>3 personas</option>
+                  <option>4 personas</option>
+                  <option>5 personas</option>
+                  <option>6 personas</option>
+                </select>
+              </div>
+            </div>
+            <button class="form__boton" type="submit">Ver disponibilidad</button>
+            <p class="form__ayuda">Para grupos de más de 6 personas, llama al restaurante.</p>
+          </form>
+        </div>
+
+        <div class="hero__imagen imagen">Imagen</div>
+      </section>
+
+      <section class="beneficios">
+        <h2 class="beneficios__titulo">Reservar es fácil y sin sorpresas</h2>
+        <div class="beneficios__lista">
+          <article class="card">
+            <div class="card__imagen card__imagen--primario imagen">Imagen</div>
+            <h3 class="card__titulo">Disponibilidad al instante</h3>
+            <p>Mira qué horarios están libres antes de decidir. Los horarios ocupados se marcan con el texto “No disponible”.</p>
+          </article>
+          <article class="card">
+            <div class="card__imagen card__imagen--secundario imagen">Imagen</div>
+            <h3 class="card__titulo">Resumen antes de confirmar</h3>
+            <p>Revisa la fecha, la hora y el número de comensales. Puedes editar tu reserva antes de confirmarla.</p>
+          </article>
+          <article class="card">
+            <div class="card__imagen card__imagen--primario imagen">Imagen</div>
+            <h3 class="card__titulo">Cancela cuando lo necesites</h3>
+            <p>Si cambian tus planes, cancela desde “Mis reservas” y la mesa queda libre para otra persona.</p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer__marca">
+        <span class="footer__logo">PrimeTable</span>
+        <span>Proyecto formativo SENA. Reservas simuladas.</span>
+      </div>
+      <ul class="footer__enlaces">
+        <li><a href="#">Inicio</a></li>
+        <li><a href="#">Mis reservas</a></li>
+        <li><a href="#">Ayuda</a></li>
+        <li><a href="#">Contacto</a></li>
+      </ul>
+    </footer>
+
+  </div>
+</body>
+</html>

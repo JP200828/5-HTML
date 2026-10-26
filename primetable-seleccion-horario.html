@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1440">
+<title>PrimeTable | Selección de horario</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primario: #8C1C2E;
+    --secundario: #8A5A00;
+    --fondo: #FAF6F0;
+    --texto: #2B2B2B;
+    --blanco: #FFFFFF;
+    --agotado: #EDE8E0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--fondo);
+    color: var(--texto);
+    font-family: 'Inter', Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  h1, h2, h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  a { color: inherit; text-decoration: none; }
+  a:focus-visible, button:focus-visible, input:focus-visible + label {
+    outline: 3px solid var(--secundario);
+    outline-offset: 2px;
+  }
+
+  .page {
+    display: flex;
+    flex-direction: column;
+    width: 1440px;
+    margin: 0 auto;
+    background: var(--fondo);
+  }
+
+  .imagen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--blanco);
+    font-weight: 600;
+    font-size: 18px;
+    border-radius: 12px;
+  }
+
+  /* NAVBAR */
+  .navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 80px;
+    border-bottom: 1px solid var(--secundario);
+  }
+  .navbar__logo {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--primario);
+  }
+  .navbar__menu {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    list-style: none;
+  }
+  .navbar__menu a { font-weight: 500; padding: 8px 4px; }
+  .navbar__menu a.activo {
+    color: var(--primario);
+    border-bottom: 2px solid var(--primario);
+  }
+  .navbar__cta {
+    display: flex;
+    padding: 12px 24px;
+    background: var(--primario);
+    color: var(--blanco);
+    font-weight: 600;
+    border-radius: 8px;
+  }
+
+  /* HERO */
+  .hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 64px;
+    padding: 48px 80px 24px;
+  }
+  .hero__contenido {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    flex: 1;
+  }
+  .hero__volver { font-weight: 600; color: var(--primario); text-decoration: underline; }
+  .hero__titulo { font-size: 48px; color: var(--primario); }
+  .hero__texto { font-size: 18px; max-width: 560px; }
+  .hero__datos {
+    display: flex;
+    gap: 12px;
+  }
+  .hero__dato {
+    display: flex;
+    padding: 8px 16px;
+    font-weight: 600;
+    background: var(--blanco);
+    border: 1px solid var(--secundario);
+    border-radius: 999px;
+  }
+  .hero__imagen {
+    width: 420px;
+    height: 220px;
+    background: var(--secundario);
+  }
+
+  /* FORM */
+  .form {
+    display: flex;
+    align-items: flex-start;
+    gap: 32px;
+    padding: 24px 80px 80px;
+  }
+  .form__horarios {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    flex: 2;
+  }
+  .form__leyenda {
+    display: flex;
+    gap: 24px;
+    font-size: 14px;
+  }
+  .form__leyenda span { display: flex; align-items: center; gap: 8px; }
+  .muestra {
+    display: flex;
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+  }
+  .muestra--libre { background: var(--blanco); border: 2px solid var(--secundario); }
+  .muestra--elegido { background: var(--primario); }
+  .muestra--agotado { background: var(--agotado); border: 2px dashed var(--texto); }
+
+  /* CARDS */
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 24px;
+    background: var(--blanco);
+    border: 1px solid var(--secundario);
+    border-radius: 16px;
+  }
+  .card__titulo { font-size: 24px; color: var(--primario); }
+  .card__subtitulo { font-size: 14px; }
+
+  .horarios {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .horario { display: flex; }
+  .horario input {
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    margin-left: -1px;
+  }
+  .horario label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    width: 148px;
+    padding: 14px 12px;
+    font-size: 18px;
+    font-weight: 600;
+    background: var(--blanco);
+    border: 2px solid var(--secundario);
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  .horario label small { font-size: 13px; font-weight: 500; }
+  .horario input:checked + label {
+    color: var(--blanco);
+    background: var(--primario);
+    border-color: var(--primario);
+  }
+  .horario input:disabled + label {
+    color: #5A5A5A;
+    background: var(--agotado);
+    border: 2px dashed var(--texto);
+    text-decoration: line-through;
+    cursor: not-allowed;
+  }
+  .horario input:disabled + label small { text-decoration: none; }
+
+  /* RESUMEN */
+  .form__resumen {
+    flex: 1;
+    gap: 16px;
+  }
+  .resumen__imagen { height: 160px; background: var(--primario); }
+  .resumen__lista {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    list-style: none;
+  }
+  .resumen__lista li {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--agotado);
+  }
+  .resumen__lista strong { font-weight: 600; }
+  .form__acciones {
+    display: flex;
+    gap: 12px;
+  }
+  .boton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    padding: 16px 24px;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  .boton--primario {
+    color: var(--blanco);
+    background: var(--primario);
+    border: 2px solid var(--primario);
+  }
+  .boton--primario:hover { background: #721524; }
+  .boton--secundario {
+    color: var(--primario);
+    background: var(--blanco);
+    border: 2px solid var(--primario);
+  }
+  .form__ayuda { font-size: 14px; }
+
+  /* FOOTER */
+  .footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 32px 80px;
+    background: var(--primario);
+    color: var(--blanco);
+  }
+  .footer__marca { display: flex; flex-direction: column; gap: 4px; }
+  .footer__logo {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 24px;
+    font-weight: 700;
+  }
+  .footer__enlaces { display: flex; gap: 32px; list-style: none; }
+  .footer__enlaces a { text-decoration: underline; }
+</style>
+</head>
+<body>
+  <div class="page">
+
+    <header class="navbar">
+      <a class="navbar__logo" href="#">PrimeTable</a>
+      <nav>
+        <ul class="navbar__menu">
+          <li><a class="activo" href="#">Inicio</a></li>
+          <li><a href="#">Mis reservas</a></li>
+          <li><a href="#">Ayuda</a></li>
+        </ul>
+      </nav>
+      <a class="navbar__cta" href="#">Nueva reserva</a>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero__contenido">
+          <a class="hero__volver" href="#">Volver a la búsqueda</a>
+          <h1 class="hero__titulo">Elige tu horario</h1>
+          <p class="hero__texto">Estos son los horarios para tu búsqueda. Selecciona uno disponible y continúa con tus datos.</p>
+          <div class="hero__datos">
+            <span class="hero__dato">Sábado 14 de noviembre</span>
+            <span class="hero__dato">2 comensales</span>
+          </div>
+        </div>
+        <div class="hero__imagen imagen">Imagen</div>
+      </section>
+
+      <form class="form" action="#" method="get">
+        <div class="form__horarios">
+          <div class="form__leyenda">
+            <span><i class="muestra muestra--libre"></i>Disponible</span>
+            <span><i class="muestra muestra--elegido"></i>Seleccionado</span>
+            <span><i class="muestra muestra--agotado"></i>No disponible</span>
+          </div>
+
+          <section class="card">
+            <div>
+              <h2 class="card__titulo">Almuerzo</h2>
+              <p class="card__subtitulo">Servicio de 12:00 m. a 3:00 p. m.</p>
+            </div>
+            <div class="horarios">
+              <div class="horario">
+                <input type="radio" id="h1200" name="horario" value="12:00">
+                <label for="h1200">12:00 p. m.<small>Disponible</small></label>
+              </div>
+              <div class="horario">
+                <input type="radio" id="h1230" name="horario" value="12:30" disabled>
+                <label for="h1230">12:30 p. m.<small>No disponible</small></label>
+              </div>
+              <div class="horario">
+                <input type="radio" id="h1300" name="horario" value="13:00">
+                <label for="h1300">1:00 p. m.<small>Disponible</small></label>
+              </div>
+              <div class="horario">
+                <input type="radio" id="h1330" name="horario" value="13:30" disabled>
+                <label for="h1330">1:30 p. m.<small>No disponible</small></label>
+              </div>
+              <div class="horario">
+                <input type="radio" id="h1400" name="horario" value="14:00">
+                <label for="h1400">2:00 p. m.<small>Disponible</small></label>
+              </div>
+              <div class="horario">
+                <input type="radio" id="h1430" name="horario" value="14:30">
+                <label for="h1430">2:30 p. m.<small>Disponible</small></label>
+              </div>
+            </div>
+          </section>
+
+          <section class="card">
+            <div>
+              <h2 class="card__titulo">Cena</h2>
+              <p class="card__subtitulo">Servicio de 6:00 p. m. a 10:00 p. m.</p>
+            </div>
+            <div class="horarios">
+              <div class="horario">
+                <input type="radio" id="h1800" name="horario" value="18:00">
+                <label for="h1800">6:00 p. m.<small>Disponible</small></label>
+              </div>
+              <div class="horario">
+                <input type="radio" id="h1900" name="horario" value="19:00" disabled>
+                <label for="h1900">7:00 p. m.<small>No disponible</small></label>
+              </div>
+              <div class="horario">
+                <input type="radio" id="h1930" name="horario" value="19:30" checked>
+                <label for="h1930">7:30 p. m.<small>Seleccionado</small></label>
+              </div>
+              <div class="horario">
+                <input type="radio" id="h2000" name="horario" value="20:00" disabled>
+                <label for="h2000">8:00 p. m.<small>No disponible</small></label>
+              </div>
+              <div class="horario">
+                <input type="radio" id="h2100" name="horario" value="21:00">
+                <label for="h2100">9:00 p. m.<small>Disponible</small></label>
+              </div>
+              <div class="horario">
+                <input type="radio" id="h2130" name="horario" value="21:30">
+                <label for="h2130">9:30 p. m.<small>Disponible</small></label>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <aside class="card form__resumen">
+          <div class="resumen__imagen imagen">Imagen</div>
+          <h2 class="card__titulo">Tu selección</h2>
+          <ul class="resumen__lista">
+            <li><span>Fecha</span><strong>Sábado 14 de noviembre</strong></li>
+            <li><span>Hora</span><strong>7:30 p. m.</strong></li>
+            <li><span>Comensales</span><strong>2 personas</strong></li>
+          </ul>
+          <div class="form__acciones">
+            <a class="boton boton--secundario" href="#">Atrás</a>
+            <button class="boton boton--primario" type="submit">Continuar</button>
+          </div>
+          <p class="form__ayuda">Aún no se confirma la reserva. En el siguiente paso ingresas tus datos.</p>
+        </aside>
+      </form>
+    </main>
+
+    <footer class="footer">
+      <div class="footer__marca">
+        <span class="footer__logo">PrimeTable</span>
+        <span>Proyecto formativo SENA. Reservas simuladas.</span>
+      </div>
+      <ul class="footer__enlaces">
+        <li><a href="#">Inicio</a></li>
+        <li><a href="#">Mis reservas</a></li>
+        <li><a href="#">Ayuda</a></li>
+        <li><a href="#">Contacto</a></li>
+      </ul>
+    </footer>
+
+  </div>
+</body>
+</html>

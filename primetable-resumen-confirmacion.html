@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1440">
+<title>PrimeTable | Resumen y confirmación</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primario: #8C1C2E;
+    --secundario: #8A5A00;
+    --fondo: #FAF6F0;
+    --texto: #2B2B2B;
+    --blanco: #FFFFFF;
+    --suave: #EDE8E0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--fondo);
+    color: var(--texto);
+    font-family: 'Inter', Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  h1, h2, h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  a { color: inherit; text-decoration: none; }
+  a:focus-visible, button:focus-visible {
+    outline: 3px solid var(--secundario);
+    outline-offset: 2px;
+  }
+
+  .page {
+    display: flex;
+    flex-direction: column;
+    width: 1440px;
+    margin: 0 auto;
+    background: var(--fondo);
+  }
+
+  .imagen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--blanco);
+    font-weight: 600;
+    font-size: 18px;
+    border-radius: 12px;
+  }
+
+  /* NAVBAR */
+  .navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 80px;
+    border-bottom: 1px solid var(--secundario);
+  }
+  .navbar__logo {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--primario);
+  }
+  .navbar__menu {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    list-style: none;
+  }
+  .navbar__menu a { font-weight: 500; padding: 8px 4px; }
+  .navbar__menu a.activo {
+    color: var(--primario);
+    border-bottom: 2px solid var(--primario);
+  }
+  .navbar__cta {
+    display: flex;
+    padding: 12px 24px;
+    background: var(--primario);
+    color: var(--blanco);
+    font-weight: 600;
+    border-radius: 8px;
+  }
+
+  /* HERO */
+  .hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 64px;
+    padding: 48px 80px 24px;
+  }
+  .hero__contenido {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    flex: 1;
+  }
+  .hero__volver { font-weight: 600; color: var(--primario); text-decoration: underline; }
+  .hero__titulo { font-size: 48px; color: var(--primario); }
+  .hero__texto { font-size: 18px; max-width: 560px; }
+  .hero__imagen {
+    width: 420px;
+    height: 220px;
+    background: var(--secundario);
+  }
+
+  /* LAYOUT */
+  .contenido {
+    display: flex;
+    align-items: flex-start;
+    gap: 32px;
+    padding: 24px 80px 80px;
+  }
+
+  /* CARDS */
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 32px;
+    background: var(--blanco);
+    border: 1px solid var(--secundario);
+    border-radius: 16px;
+  }
+  .card__titulo { font-size: 24px; color: var(--primario); }
+  .card__subtitulo { font-size: 14px; }
+
+  .resumen { flex: 2; }
+  .resumen__codigo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 16px 20px;
+    background: var(--fondo);
+    border: 2px dashed var(--secundario);
+    border-radius: 12px;
+  }
+  .resumen__codigo strong {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 28px;
+    color: var(--primario);
+  }
+  .resumen__bloque {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .resumen__encabezado {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .resumen__encabezado h3 { font-size: 20px; }
+  .resumen__editar { font-weight: 600; color: var(--primario); text-decoration: underline; }
+  .resumen__lista {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    list-style: none;
+  }
+  .resumen__lista li {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--suave);
+  }
+  .resumen__lista strong { font-weight: 600; text-align: right; }
+
+  /* FORM */
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    flex: 1;
+  }
+  .form__imagen { height: 160px; background: var(--primario); }
+  .form__aviso {
+    display: flex;
+    padding: 12px 16px;
+    font-size: 14px;
+    background: var(--fondo);
+    border-left: 4px solid var(--secundario);
+    border-radius: 4px;
+  }
+  .form__acciones {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .boton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 24px;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  .boton--primario {
+    color: var(--blanco);
+    background: var(--primario);
+    border: 2px solid var(--primario);
+  }
+  .boton--primario:hover { background: #721524; }
+  .boton--secundario {
+    color: var(--primario);
+    background: var(--blanco);
+    border: 2px solid var(--primario);
+  }
+  .form__ayuda { font-size: 14px; }
+
+  /* FOOTER */
+  .footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 32px 80px;
+    background: var(--primario);
+    color: var(--blanco);
+  }
+  .footer__marca { display: flex; flex-direction: column; gap: 4px; }
+  .footer__logo {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 24px;
+    font-weight: 700;
+  }
+  .footer__enlaces { display: flex; gap: 32px; list-style: none; }
+  .footer__enlaces a { text-decoration: underline; }
+</style>
+</head>
+<body>
+  <div class="page">
+
+    <header class="navbar">
+      <a class="navbar__logo" href="#">PrimeTable</a>
+      <nav>
+        <ul class="navbar__menu">
+          <li><a class="activo" href="#">Inicio</a></li>
+          <li><a href="#">Mis reservas</a></li>
+          <li><a href="#">Ayuda</a></li>
+        </ul>
+      </nav>
+      <a class="navbar__cta" href="#">Nueva reserva</a>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero__contenido">
+          <a class="hero__volver" href="#">Volver al formulario</a>
+          <h1 class="hero__titulo">Revisa tu reserva</h1>
+          <p class="hero__texto">Verifica que la fecha, la hora y tus datos sean correctos. Tu reserva queda guardada cuando pulses “Confirmar reserva”.</p>
+        </div>
+        <div class="hero__imagen imagen">Imagen</div>
+      </section>
+
+      <div class="contenido">
+        <section class="card resumen">
+          <div>
+            <h2 class="card__titulo">Resumen de tu reserva</h2>
+            <p class="card__subtitulo">Guarda tu código de reserva. Lo necesitarás para cancelar.</p>
+          </div>
+
+          <div class="resumen__codigo">
+            <span>Código de reserva</span>
+            <strong>PT-4821</strong>
+          </div>
+
+          <div class="resumen__bloque">
+            <div class="resumen__encabezado">
+              <h3>Tu mesa</h3>
+              <a class="resumen__editar" href="#">Editar horario</a>
+            </div>
+            <ul class="resumen__lista">
+              <li><span>Fecha</span><strong>Sábado 14 de noviembre</strong></li>
+              <li><span>Hora</span><strong>7:30 p. m.</strong></li>
+              <li><span>Comensales</span><strong>2 personas</strong></li>
+            </ul>
+          </div>
+
+          <div class="resumen__bloque">
+            <div class="resumen__encabezado">
+              <h3>Tus datos</h3>
+              <a class="resumen__editar" href="#">Editar datos</a>
+            </div>
+            <ul class="resumen__lista">
+              <li><span>Nombre</span><strong>María Fernanda López</strong></li>
+              <li><span>Teléfono</span><strong>300 123 4567</strong></li>
+              <li><span>Correo</span><strong>maria@correo.com</strong></li>
+              <li><span>Ocasión</span><strong>Aniversario</strong></li>
+              <li><span>Observaciones</span><strong>Alergia a los frutos secos</strong></li>
+            </ul>
+          </div>
+        </section>
+
+        <aside class="card form">
+          <div class="form__imagen imagen">Imagen</div>
+          <h2 class="card__titulo">¿Todo está bien?</h2>
+          <p class="form__aviso">Puedes cancelar sin costo hasta 2 horas antes de la reserva.</p>
+          <form class="form__acciones" action="#" method="post">
+            <button class="boton boton--primario" type="submit">Confirmar reserva</button>
+            <a class="boton boton--secundario" href="#">Editar</a>
+          </form>
+          <p class="form__ayuda">Al confirmar, tu reserva aparecerá en “Mis reservas”.</p>
+        </aside>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer__marca">
+        <span class="footer__logo">PrimeTable</span>
+        <span>Proyecto formativo SENA. Reservas simuladas.</span>
+      </div>
+      <ul class="footer__enlaces">
+        <li><a href="#">Inicio</a></li>
+        <li><a href="#">Mis reservas</a></li>
+        <li><a href="#">Ayuda</a></li>
+        <li><a href="#">Contacto</a></li>
+      </ul>
+    </footer>
+
+  </div>
+</body>
+</html>
